@@ -20,12 +20,14 @@ private:
   E it;                   // The node's value
   BSTNode* lc;            // Pointer to left child
   BSTNode* rc;            // Pointer to right child
+  bool leftThread;        // True if left pointer is a thread
+  bool rightThread;       // True if right pointer is a thread
 
 public:
   // Two constructors -- with and without initial values
-  BSTNode() { lc = rc = NULL; }
+  BSTNode() { lc = rc = NULL; leftThread = false; rightThread = false; }
   BSTNode(Key K, E e, BSTNode* l =NULL, BSTNode* r =NULL)
-    { k = K; it = e; lc = l; rc = r; }
+    { k = K; it = e; lc = l; rc = r; leftThread = false; rightThread = false; } //new thread implemantation
   ~BSTNode() {}             // Destructor
 
   // Functions to set and return the value and key

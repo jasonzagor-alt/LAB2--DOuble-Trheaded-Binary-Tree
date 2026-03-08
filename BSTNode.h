@@ -44,4 +44,22 @@ public:
 
   // Return true if it is a leaf, false otherwise
   bool isLeaf() { return (lc == NULL) && (rc == NULL); }
+
+  // Functions to set and return the thread status
+  bool isLeftThread() const 
+  {
+      return leftThread; 
+  }
+  void setLeftThread(bool b)
+  {
+      leftThread = b;
+  }
+  bool isRightThread() const
+  {
+      return rightThread;
+  }
+  void setRightThread(bool b) 
+  { 
+      rightThread = b; 
+  }
 };

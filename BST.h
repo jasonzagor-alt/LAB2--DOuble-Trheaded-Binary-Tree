@@ -173,13 +173,60 @@ clearhelp(BSTNode<Key, E>* root) {
 // Insert a node into the BST, returning the updated tree
 template <typename Key, typename E>
 BSTNode<Key, E>* BST<Key, E>::
-inserthelp(
-    BSTNode<Key, E>* root, const Key& k, const E& it) {
-  if (root == NULL)  // Empty tree: create node
-    return new BSTNode<Key, E>(k, it, NULL, NULL);
-  if (k < root->key())
-    root->setLeft(inserthelp(root->left(), k, it));
-  else root->setRight(inserthelp(root->right(), k, it));
+inserthelp(BSTNode<Key, E>* root, const Key& k, const E& it)
+{
+	BSTNode<Key, E>* parent = NULL;
+	BSTNode<Key, E>* curr = root;
+
+    if (root == NULL)   // Empty tree: create node
+    {
+        BSTNode<Key, E>* node = new BSTNode<Key, E>(k, it, NULL, NULL);
+        node->setLeftThread(true);
+        node->setRightThread(true);
+        return node;
+    }
+
+	//Find insertion point
+    while (curr != NULL)
+    {
+        parent = curr;
+
+        if (k < curr->key())
+        {
+            if (curr->isLeftThread() == false)
+                curr = curr->left();
+            else
+                break;
+        }
+        else
+        { 
+            if (curr->isRightThread() == false)
+                curr = curr->right();
+            else
+                break; 
+        }
+
+    }
+    //Create a new node
+	BSTNode<Key, E>* node = new BSTNode<Key, E>(k, it, NULL, NULL);
+    node->setLeftThread(true);
+    node->setRightThread(true);
+
+    //INsert as left or right child
+    if (k < parent->key())
+    {
+        node->setLeft(parent->left());
+        node->setRight(parent);
+        parent->setLeft(node);
+        parent->setLeftThread(false);
+    }
+    else
+    {
+        node->setLeft(parent);
+        node->setRight(parent->right());
+        parent->setRight(node);
+        parent->setRightThread(false);
+    }
   return root;       // Return tree with node inserted
 }
 
@@ -236,14 +283,15 @@ removehelp(BSTNode<Key, E>* rt, const Key& k) {
 // Find a node with the given key value
 template <typename Key, typename E>
 E* BST<Key, E>::
-findhelp(BSTNode<Key, E>* root,
-                              const Key& k) const {
+findhelp(BSTNode<Key, E>* root,const Key& k) const 
+{
   if (root == NULL) return NULL;          // Empty tree
   if (k < root->key())
     return findhelp(root->left(), k);   // Check left
   else if (k > root->key())
     return findhelp(root->right(), k);  // Check right
-  else {
+  else 
+  {
       E* temp = new E;
       *temp = root->element();
       return temp;  // Found it

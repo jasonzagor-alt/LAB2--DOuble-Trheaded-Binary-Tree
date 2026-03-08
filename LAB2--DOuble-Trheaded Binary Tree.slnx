@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="LAB2--DOuble-Trheaded Binary Tree/LAB2--DOuble-Trheaded Binary Tree.vcxproj" />
+</Solution>
